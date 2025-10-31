@@ -173,3 +173,191 @@ Mengetahui jumlah produk dan pelanggan unik yang tercatat dalam dataset penjuala
 * Gunakan .nunique() pada kolom customer_id untuk menghitung jumlah pelanggan unik.
 
 * Tampilkan kedua hasil tersebut (n_product, n_customer).
+
+## Program 6 - Statistik Penjualan per Produk
+```python
+stats = (
+    merged.groupby(['product_id']).agg(
+        total_sales=('line_item_amount', 'sum'),
+        avg_sales=('line_item_amount', 'mean'),
+        total_qty=('quantity', 'sum'),
+        num_transactions=('transaction_id', 'nunique')
+    ).reset_index()
+)
+stats = stats.sort_values(by='total_sales', ascending=False)
+stats.head()
+```
+
+
+### Tujuan
+Menganalisis performa penjualan tiap produk berdasarkan total penjualan, rata-rata transaksi, jumlah barang terjual, dan banyaknya transaksi.
+
+### Manfaat
+
+* Mengetahui produk dengan penjualan tertinggi dan performa terbaik.
+
+* Menjadi dasar pengambilan keputusan stok, harga, atau promosi produk.
+
+* Memberikan insight mendalam mengenai kontribusi tiap produk terhadap total pendapatan.
+
+### Langkah
+
+Kelompokkan data berdasarkan product_id menggunakan groupby().
+
+Hitung total, rata-rata penjualan, total kuantitas, dan jumlah transaksi unik.
+
+Urutkan hasil berdasarkan total_sales dari tertinggi ke terendah.
+
+Tampilkan 5 produk teratas dengan head().
+
+## Program 7 - Analisis Kontribusi Penjualan Tiap Produk terhadap Kategorinya
+
+```python
+category_summary = (
+    merged.groupby("product_category")["line_item_amount"]
+    .sum()
+    .reset_index()
+    .rename(columns={'line_item_amount': 'total_sales', 'product_category': 'category'})
+)
+
+category_summary = category_summary.rename(columns={'total_sales': 'total_sales_category'})
+merged_stats = merged.merge(
+    category_summary[['category', 'total_sales_category']],
+    left_on='product_category',
+    right_on='category',
+    how='left'
+)
+merged_stats['kontribusi%'] = (
+    merged_stats['line_item_amount'] / merged_stats['total_sales_category']
+) * 100
+merged_stats.head()
+```
+
+### Tujuan
+
+Mengukur kontribusi tiap produk terhadap total penjualan kategori produknya masing-masing.
+
+### Manfaat
+
+* Mengetahui produk mana yang paling berpengaruh dalam kategori tertentu.
+
+* Membantu menentukan fokus promosi pada produk dengan kontribusi tinggi.
+
+* Memberikan insight proporsi penjualan tiap produk dalam satu kategori.
+
+### Langkah:
+
+* Hitung total penjualan per kategori dengan groupby() dan sum().
+
+* Ganti nama kolom agar lebih deskriptif (total_sales_category).
+
+* Gabungkan hasil tersebut ke dataset utama (merged).
+
+* Hitung persentase kontribusi tiap produk dengan membagi nilai produk terhadap total kategori.
+
+* Tampilkan hasil dalam kolom baru kontribusi%.
+
+## Program 8- outlet dengan penjualan terendah
+
+```python
+rekap = (
+    sr.groupby("sales_outlet_id")
+    .agg(
+        penjualan=("quantity", "sum"),
+        transaksi=("transaction_id", "count")
+    )
+    .reset_index()
+)
+rekap
+```
+
+### Tujuan
+
+Membuat rekapitulasi jumlah barang terjual dan total transaksi untuk setiap outlet penjualan.
+
+### Manfaat
+
+* Mengetahui performa setiap outlet dalam hal jumlah transaksi dan volume penjualan.
+
+* Menjadi dasar evaluasi cabang yang paling produktif.
+
+### Langkah
+
+* Kelompokkan data berdasarkan sales_outlet_id.
+
+* Hitung total quantity (barang terjual) dan jumlah transaction_id (transaksi).
+
+* Kembalikan hasil ke bentuk tabel dengan reset_index().
+
+## Program 9 - Produk dengan penjualan terendah
+
+```python
+rekap_product = (
+    sr.groupby('product_id')
+    .agg(
+        total_penjualan=('quantity', 'sum'),
+        total_transaksi=('transaction_id', 'count')
+    )
+    .reset_index()
+    .sort_values(by='total_penjualan')
+)
+rekap_product.head(10)
+```
+
+### Tujuan
+Membuat rekap jumlah barang terjual dan banyaknya transaksi untuk setiap produk.
+
+### Manfaat
+
+* Mengidentifikasi produk dengan volume penjualan tinggi atau rendah.
+
+* Menjadi dasar pengambilan keputusan pengelolaan stok dan promosi produk.
+
+### Langkah
+
+* Kelompokkan data berdasarkan product_id.
+
+* Hitung total quantity (barang terjual) dan jumlah transaction_id (transaksi).
+
+* Urutkan hasil berdasarkan total_penjualan.
+
+* Tampilkan 10 produk dengan penjualan terendah menggunakan head(10).
+
+## Program 10 - Ringkasan Total Penjualan per Outlet
+
+```python
+outlet_sales_summary = (
+    merged.groupby('sales_outlet_id')['line_item_amount']
+    .sum()
+    .reset_index()
+)
+outlet_sales_summary = pd.merge(
+    outlet_sales_summary,
+    so[["sales_outlet_id", "store_city"]],
+    on="sales_outlet_id",
+    how="left"
+)
+outlet_sales_summary = outlet_sales_summary.sort_values("line_item_amount", ascending=False)
+display(outlet_sales_summary.head())
+```
+
+### Tujuan
+Menampilkan total nilai penjualan tiap outlet dan mengaitkannya dengan kota tempat outlet berada.
+
+### Manfaat
+
+* Mengetahui outlet dengan performa penjualan tertinggi.
+
+* Memberikan gambaran persebaran kontribusi penjualan per kota.
+
+* Mendukung analisis geografis dalam strategi penjualan.
+
+### Langkah
+
+* Hitung total penjualan per outlet dengan groupby() dan sum().
+
+* Gabungkan hasil dengan tabel outlet (so) untuk mendapatkan nama kota.
+
+* Urutkan hasil berdasarkan line_item_amount secara menurun.
+
+* Tampilkan beberapa outlet dengan nilai penjualan tertinggi menggunakan head().
