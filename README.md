@@ -1,5 +1,13 @@
 # Insight-IPSD-Kelompok-4
 
+## Anggota Kelompok
+
+1. Talitha Ineztasia - 103102400067
+2. Nadia Clearesta Shafira - 103102400007
+3. Aesha Pink Al Islami Mahardhika - 103102400082
+4. Muhammad Eka Dimas Saputra - 103102400003
+5. Rafif Fikri - 103102400068
+
 ## 1. Deskripsi Proyek
 
 Proyek ini bertujuan untuk menampilkan dan menganalisis insight dari database CoffeeShop_Dataset.db dengan memanfaatkan pustaka Pandas pada Python.
