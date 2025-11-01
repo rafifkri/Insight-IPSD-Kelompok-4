@@ -3,26 +3,21 @@
 ## 1. Deskripsi Proyek
 
 Proyek ini bertujuan untuk menampilkan dan menganalisis insight dari database CoffeeShop_Dataset.db dengan memanfaatkan pustaka Pandas pada Python.
-Notebook ini berisi serangkaian program eksplorasi data, mulai dari pembacaan database, penggabungan tabel, pengelompokan (grouping), hingga analisis transaksi.
-Seluruh proses dilakukan untuk memperlihatkan bagaimana Pandas dapat digunakan sebagai alat bantu dalam data processing dan data analytics secara efisien.
+Tujuan kita kali ini adalah menentukan penjualan produk tertinggi hingga terendah dan mencari outlet dengan transaksi terbanyak hingga tersedikt untuk menganalisis dalam pembuatan event diskon atau promo dalam 2 kategori yaitu :
+1. Memberikan promo untuk produk dengan penjualan terendah pada outlet dengan jumlah transaksi terbanyak
+2. Memberikan promo untuk produk dengan penjualan tertinggi pada outlet dengan jumlah transaksi tersedikit
 
-## 2. Tujuan
+## 2. Tujuan dan Manfaat
 
-Mengimplementasikan penggunaan Pandas dalam membaca dan mengolah data dari database SQLite.
+#### 1. Memberikan promo untuk produk dengan penjualan terendah pada outlet dengan jumlah transaksi terbanyak
 
-Menunjukkan tahapan pengolahan data mulai dari penggabungan tabel, agregasi, dan transformasi data.
+Menjual produk yang kurang terjual pada outlet yang ramai akan memberikan peluang penjualan pada produk yang kurang terjual, karena kebanyakan orang sering mengambil promo dari produk yang ditawarkan biarpun itu bukan produk favorit pelanggan apalagi promo tersebut dilakukan di outlet yang ramai. Ini akan memberikan peluang untuk mendapat keuntungan.
 
-Menyediakan insight awal terhadap data penjualan kopi berdasarkan outlet, transaksi, dan kategori.
+#### 2. Memberikan promo untuk produk dengan penjualan tertinggi pada outlet dengan jumlah transaksi tersedikit
 
-## 3. Manfaat
+Menjual produk yang banyak terjual pada outlet yang sepi akan memberikan peluang pada kunjungan pelanggan ke outlet, karena produk dengan penjualan tinggi tentunya memiliki banyak peminat, ini akan menarik pelanggan untuk melakukan transaksi di outlet tersebut. 
 
-Memberikan pemahaman tentang penggunaan Pandas untuk mengelola data relasional tanpa harus berpindah ke SQL langsung.
-
-Menjadi referensi praktikum untuk memahami konsep data wrangling dan data aggregation di Python.
-
-Menunjukkan efisiensi Pandas dalam menganalisis dataset berukuran menengah seperti CoffeeShop_Dataset.db.
-
-## 4. Alur Kerja (Workflow)
+## 3. Alur Kerja (Workflow)
 
 Membaca database CoffeeShop menggunakan sqlite3 dan menampilkan tabel yang tersedia.
 
@@ -361,3 +356,13 @@ Menampilkan total nilai penjualan tiap outlet dan mengaitkannya dengan kota temp
 * Urutkan hasil berdasarkan line_item_amount secara menurun.
 
 * Tampilkan beberapa outlet dengan nilai penjualan tertinggi menggunakan head().
+
+## 4. Kesimpulan
+
+#### 1. Memberikan promo untuk produk dengan penjualan terendah pada outlet dengan jumlah transaksi terbanyak
+
+Dari hasil analisis yang sudah dilakukan produk yang akan diberikan promo adalah produk dengan product_id : 19, 18, 12, 4, dan 14 pada outlet dengan sales_oulet_id : 8
+
+#### 2. Memberikan promo untuk produk dengan penjualan tertinggi pada outlet dengan jumlah transaksi tersedikit
+
+Dari hasil analisis yang sudah dilakukan produk yang akan diberikan promo adalah produk dengan product_id : 50, 59, 38, 54, dan 32 pada outlet dengan sales_outlet_id : 3
