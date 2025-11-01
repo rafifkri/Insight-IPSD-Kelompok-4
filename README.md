@@ -26,19 +26,19 @@ Menjual produk yang banyak terjual pada outlet yang sepi akan memberikan peluang
 
 ## 3. Alur Kerja (Workflow)
 
-Membaca database CoffeeShop menggunakan sqlite3 dan menampilkan tabel yang tersedia.
+* Membaca database CoffeeShop menggunakan sqlite3 dan menampilkan tabel yang tersedia.
 
-Mengimpor data dari tabel utama ke dalam DataFrame Pandas.
+* Mengimpor data dari tabel utama ke dalam DataFrame Pandas.
 
-Melakukan eksplorasi awal dengan fungsi head(), info(), dan describe().
+* Melakukan eksplorasi awal dengan fungsi head(), info(), dan describe().
 
-Melakukan penggabungan data antar tabel untuk memperkaya informasi (misalnya antara sales_report dan sales_outlet).
+* Melakukan penggabungan data antar tabel untuk memperkaya informasi (misalnya antara sales_report dan sales_outlet).
 
-Melakukan analisis statistik sederhana melalui groupby() dan agg().
+* Melakukan analisis statistik sederhana melalui groupby() dan agg().
 
-Menampilkan hasil akhir dalam bentuk DataFrame insight seperti total transaksi per outlet.
+* Menampilkan hasil akhir dalam bentuk DataFrame insight seperti total transaksi per outlet.
 
-##Program 1 — Analisis Penjualan per Kategori Produk
+## Program 1 — Analisis Penjualan per Kategori Produk
 ```python
 merged = sr.merge(p[["product_id","product_category"]], on="product_id", how="left")
 category = merged.groupby("product_category")["line_item_amount"].sum().reset_index()
